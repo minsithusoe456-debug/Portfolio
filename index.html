@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
-           1. VARIABLES & CORE MESH ARCHITECTURE
+           1. VARIABLES & CORE
            ========================================================================== */
         :root {
             --bg-glass: rgba(255, 255, 255, 0.45);
@@ -34,23 +34,41 @@
         }
 
         body {
-            background: 
-                radial-gradient(at 0% 0%, rgba(165, 180, 252, 0.4) 0px, transparent 50%),   
-                radial-gradient(at 100% 0%, rgba(253, 164, 186, 0.35) 0px, transparent 50%), 
-                radial-gradient(at 50% 50%, rgba(244, 63, 94, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(147, 51, 234, 0.1) 0px, transparent 50%),
-                #f8fafc; 
-            background-attachment: fixed;
+            background: #f8fafc;
             font-family: var(--font-stack);
             color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             position: relative;
             overflow-x: hidden;
+            cursor: default;
         }
 
         /* ==========================================================================
-           BACKGROUND MEDIA CONSTELLATION ANIMATION
+           1. MORPHING GRADIENT BACKGROUND
+           ========================================================================== */
+        .morphing-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(-45deg, #f8fafc, #eef2ff, #fce7f3, #ede9fe);
+            background-size: 400% 400%;
+            animation: morphGradient 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes morphGradient {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 0%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ==========================================================================
+           2. MEDIA CONSTELLATION WITH CONNECTING LINES
            ========================================================================== */
         #media-constellation {
             position: fixed;
@@ -58,7 +76,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: -1;
             pointer-events: none;
             overflow: hidden;
         }
@@ -69,13 +87,14 @@
             opacity: 0.08;
             color: var(--accent);
             animation: floatIcon 20s ease-in-out infinite alternate;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             user-select: none;
+            will-change: transform;
         }
 
         .media-icon:hover {
-            opacity: 0.25;
-            transform: scale(1.3) rotate(10deg);
+            opacity: 0.3;
+            transform: scale(1.4) rotate(15deg);
         }
 
         .media-icon:nth-child(1) { top: 5%; left: 3%; animation-duration: 22s; font-size: 2.2rem; }
@@ -102,79 +121,52 @@
             100% { transform: translate(-30px, -30px) rotate(-5deg) scale(0.95); }
         }
 
-        /* Connecting lines between icons */
-        .connection-line {
-            position: absolute;
-            background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.05), transparent);
-            height: 1px;
-            transform-origin: left center;
-            animation: pulseLine 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes pulseLine {
-            0% { opacity: 0.1; }
-            100% { opacity: 0.4; }
-        }
-
-        /* Floating orbs / light particles */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, transparent 70%);
-            animation: orbFloat 15s ease-in-out infinite alternate;
-            pointer-events: none;
-        }
-
-        .orb:nth-child(1) { width: 300px; height: 300px; top: 10%; left: -5%; animation-duration: 18s; }
-        .orb:nth-child(2) { width: 400px; height: 400px; bottom: 10%; right: -10%; animation-duration: 22s; animation-delay: -5s; }
-        .orb:nth-child(3) { width: 200px; height: 200px; top: 50%; left: 50%; animation-duration: 20s; animation-delay: -10s; }
-
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, -30px) scale(1.2); }
-            100% { transform: translate(-40px, 40px) scale(0.8); }
-        }
-
-        .ambient-glow-1 {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(99, 102, 241, 0.15);
-            border-radius: 50%;
-            filter: blur(80px);
-            top: 15%;
-            left: -10%;
+        /* Connecting lines between icons - drawn via canvas */
+        #line-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
             pointer-events: none;
-            animation: driftGlow 20s ease-in-out infinite alternate;
-        }
-        
-        .ambient-glow-2 {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: rgba(219, 39, 119, 0.1);
-            border-radius: 50%;
-            filter: blur(100px);
-            top: 55%;
-            right: -10%;
-            z-index: -1;
-            pointer-events: none;
-            animation: driftGlow2 25s ease-in-out infinite alternate;
-        }
-
-        @keyframes driftGlow {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(60px, 40px) scale(1.2); }
-        }
-
-        @keyframes driftGlow2 {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-50px, -30px) scale(1.3); }
         }
 
         /* ==========================================================================
-           GLASS & CONTAINER STYLES
+           3. SPOTLIGHT EFFECT
+           ========================================================================== */
+        #spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle 300px at var(--x, 50%) var(--y, 50%), 
+                        rgba(255, 255, 255, 0.25) 0%, 
+                        rgba(255, 255, 255, 0) 70%);
+            mix-blend-mode: overlay;
+            transition: background 0.1s ease;
+        }
+
+        /* ==========================================================================
+           4. PROGRESS BAR
+           ========================================================================== */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.4);
+        }
+
+        /* ==========================================================================
+           5. GLASS & CONTAINER
            ========================================================================== */
         .glass-panel {
             background: var(--bg-glass);
@@ -200,6 +192,14 @@
             padding: 120px 0;
             position: relative;
             z-index: 1;
+            opacity: 0;
+            transform: translateY(50px) scale(0.98);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         .section-title {
@@ -221,6 +221,9 @@
             border-radius: 4px;
         }
 
+        /* ==========================================================================
+           6. BUTTONS WITH MAGNETIC EFFECT
+           ========================================================================== */
         .btn-primary {
             display: inline-block;
             padding: 14px 32px;
@@ -234,6 +237,8 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            will-change: transform;
         }
 
         .btn-primary::after {
@@ -253,7 +258,7 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 12px 30px rgba(79, 70, 229, 0.55);
             border-color: rgba(255, 255, 255, 0.5);
         }
@@ -271,6 +276,8 @@
             margin-left: 15px;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            will-change: transform;
         }
 
         .btn-secondary::after {
@@ -293,7 +300,7 @@
         .btn-secondary:hover {
             color: white;
             border-color: transparent;
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 12px 30px rgba(79, 70, 229, 0.35);
         }
 
@@ -305,7 +312,7 @@
         }
 
         /* ==========================================================================
-           NAVIGATION
+           7. NAVIGATION
            ========================================================================== */
         .navbar {
             position: fixed;
@@ -417,7 +424,7 @@
         }
 
         /* ==========================================================================
-           HERO
+           8. HERO
            ========================================================================== */
         .hero-section {
             padding: 220px 0 120px 0;
@@ -458,6 +465,21 @@
             min-height: 4.5rem;
             opacity: 0;
             animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        #typed-text .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--accent);
+            margin-left: 4px;
+            animation: cursorPulse 0.8s ease-in-out infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes cursorPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .hero-content h2 {
@@ -508,12 +530,30 @@
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: block;
+            position: relative;
+        }
+
+        .stat-number::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+            transition: width 1s ease 0.5s;
+        }
+
+        .stat-item.visible .stat-number::after {
+            width: 40px;
         }
 
         .stat-label {
@@ -535,6 +575,25 @@
             padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.7);
             animation: float 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .profile-photo-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            padding: 2px;
+            background: var(--accent-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .profile-photo-container:hover::before {
+            opacity: 1;
         }
 
         @keyframes float {
@@ -560,7 +619,21 @@
         }
 
         /* ==========================================================================
-           TIMELINE
+           9. 3D TILT CARDS
+           ========================================================================== */
+        .tilt-card {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            will-change: transform;
+        }
+
+        .tilt-card:hover {
+            transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(1.02);
+        }
+
+        /* ==========================================================================
+           10. TIMELINE
            ========================================================================== */
         .timeline {
             position: relative;
@@ -677,7 +750,7 @@
         }
 
         /* ==========================================================================
-           EDUCATION
+           11. EDUCATION
            ========================================================================== */
         .education-container {
             display: flex;
@@ -863,7 +936,7 @@
         }
 
         /* ==========================================================================
-           PORTFOLIO CARDS
+           12. PORTFOLIO CARDS WITH FLIP
            ========================================================================== */
         .portfolio-grid {
             display: grid;
@@ -878,6 +951,7 @@
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0;
             transform: translateY(40px);
+            position: relative;
         }
 
         .portfolio-card.visible {
@@ -891,6 +965,55 @@
             box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.25);
         }
 
+        /* Flip card front/back */
+        .flip-container {
+            perspective: 1000px;
+            width: 100%;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+        }
+
+        .portfolio-card:hover .flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-front, .flip-back {
+            position: relative;
+            width: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .flip-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotateY(180deg);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .flip-back h3 {
+            margin-bottom: 10px;
+        }
+
+        .flip-back p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+        }
+
         .card-image {
             height: 240px;
             width: 100%;
@@ -900,6 +1023,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.6s ease;
+            border-radius: 20px 20px 0 0;
         }
 
         .portfolio-card:hover .card-image {
@@ -973,7 +1097,7 @@
         }
 
         /* ==========================================================================
-           MODALS
+           13. MODALS
            ========================================================================== */
         .modal-overlay {
             position: fixed;
@@ -1147,7 +1271,7 @@
         }
 
         /* ==========================================================================
-           VOLUNTEER
+           14. VOLUNTEER
            ========================================================================== */
         .volunteer-container {
             display: flex;
@@ -1328,7 +1452,7 @@
         }
 
         /* ==========================================================================
-           SKILLS
+           15. SKILLS WITH RADAR CHART
            ========================================================================== */
         .skills-container {
             display: flex;
@@ -1419,6 +1543,24 @@
             background: rgba(79, 70, 229, 0.1);
             border-radius: 6px;
             overflow: hidden;
+            position: relative;
+        }
+
+        .skill-bar-track::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmerBar 2s ease-in-out infinite;
+            transform: translateX(-100%);
+        }
+
+        @keyframes shimmerBar {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .skill-bar-fill {
@@ -1427,6 +1569,7 @@
             background: var(--accent-gradient);
             transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
             width: 0;
+            position: relative;
         }
 
         .skill-bar-fill.animated {
@@ -1434,7 +1577,7 @@
         }
 
         /* ==========================================================================
-           TESTIMONIALS
+           16. TESTIMONIALS
            ========================================================================== */
         .testimonials-grid {
             display: grid;
@@ -1493,7 +1636,7 @@
         }
 
         /* ==========================================================================
-           CONTACT
+           17. CONTACT
            ========================================================================== */
         .contact-subtitle {
             text-align: center;
@@ -1611,7 +1754,28 @@
         }
 
         /* ==========================================================================
-           FOOTER
+           18. SVG PATH DRAWING
+           ========================================================================== */
+        .svg-draw {
+            width: 150px;
+            height: 60px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .svg-draw path {
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawPath 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes drawPath {
+            0% { stroke-dashoffset: 200; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* ==========================================================================
+           19. FOOTER
            ========================================================================== */
         .footer {
             text-align: center;
@@ -1627,7 +1791,7 @@
         }
 
         /* ==========================================================================
-           RESPONSIVE
+           20. RESPONSIVE
            ========================================================================== */
         @media (max-width: 968px) {
             .navbar {
@@ -1764,10 +1928,14 @@
 <body>
 
     <!-- ============================================================
-    BACKGROUND MEDIA CONSTELLATION
+    BACKGROUND LAYERS
     ============================================================ -->
+    <div class="morphing-bg"></div>
+    <div id="spotlight"></div>
+    <div id="progress-bar"></div>
+
+    <!-- Media Constellation -->
     <div id="media-constellation">
-        <!-- Media Icons Floating Around -->
         <i class="fas fa-camera media-icon"></i>
         <i class="fas fa-video media-icon"></i>
         <i class="fas fa-pen-fancy media-icon"></i>
@@ -1783,16 +1951,13 @@
         <i class="fas fa-globe media-icon"></i>
         <i class="fas fa-share-alt media-icon"></i>
         <i class="fas fa-chart-line media-icon"></i>
-
-        <!-- Floating Orbs -->
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
     </div>
 
-    <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
+    <canvas id="line-canvas"></canvas>
 
+    <!-- ============================================================
+    NAVIGATION
+    ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">SoeMin<span>Sithu</span></a>
@@ -1813,6 +1978,22 @@
         </div>
     </nav>
 
+    <!-- ============================================================
+    SVG PATH DRAWING (Footer Signature)
+    ============================================================ -->
+    <svg class="svg-draw" viewBox="0 0 150 60" style="display:none;">
+        <path d="M10,30 Q30,10 50,30 T90,30 T130,30" stroke="url(#grad)" stroke-width="2" fill="none"/>
+        <defs>
+            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#db2777;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- ============================================================
+    HERO
+    ============================================================ -->
     <section id="about" class="hero-section">
         <div class="container hero-grid">
             <div class="hero-content">
@@ -1837,23 +2018,26 @@
                 </div>
 
                 <div class="btn-group">
-                    <a href="#works" class="btn-primary">Explore Media Vault</a>
-                    <a href="#cv-download" class="btn-secondary"><i class="fas fa-file-pdf"></i> Download CV</a>
+                    <a href="#works" class="btn-primary" data-magnetic>Explore Media Vault</a>
+                    <a href="#cv-download" class="btn-secondary" data-magnetic><i class="fas fa-file-pdf"></i> Download CV</a>
                 </div>
             </div>
 
-            <div class="profile-photo-container glass-panel">
+            <div class="profile-photo-container glass-panel tilt-card" data-tilt>
                 <img src="Untitled design (2).png" alt="Soe Min Sithu - Professional Profile" class="profile-photo">
             </div>
         </div>
     </section>
 
+    <!-- ============================================================
+    EXPERIENCE
+    ============================================================ -->
     <section id="experience" class="section">
         <div class="container">
             <h2 class="section-title">Professional Experience</h2>
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-card glass-panel">
+                    <div class="timeline-card glass-panel tilt-card" data-tilt>
                         <div class="timeline-date">2025 Feb - Present</div>
                         <div class="timeline-content">
                             <h3>Freelance Content Creator</h3>
@@ -1866,7 +2050,7 @@
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-card glass-panel">
+                    <div class="timeline-card glass-panel tilt-card" data-tilt>
                         <div class="timeline-date">2025 Feb - 2026 May</div>
                         <div class="timeline-content">
                             <h3>Social Media Marketing Generalist</h3>
@@ -1880,7 +2064,7 @@
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-card glass-panel">
+                    <div class="timeline-card glass-panel tilt-card" data-tilt>
                         <div class="timeline-date">2024 Jun - 2024 Sept</div>
                         <div class="timeline-content">
                             <h3>Corporate Communication Intern</h3>
@@ -1897,6 +2081,9 @@
         </div>
     </section>
 
+    <!-- ============================================================
+    EDUCATION
+    ============================================================ -->
     <section id="education" class="section">
         <div class="container">
             <h2 class="section-title">Education</h2>
@@ -1907,18 +2094,16 @@
                         <img src="photo_6199429845037551252_y.jpg" class="slide" alt="Bachelor's graduation photo 3">
                         <img src="IMG_8840.JPG" class="slide active" alt="Bachelor's graduation photo 1">
                         <img src="IMG_9113.JPG" class="slide" alt="Bachelor's graduation photo 2">
-                        
                         <div class="dot-container" id="dots1">
                             <span class="dot active" data-index="0"></span>
                             <span class="dot" data-index="1"></span>
                             <span class="dot" data-index="2"></span>
                         </div>
-                        
                         <button class="slide-btn prev" onclick="changeSlide('slideshow1', -1)">‹</button>
                         <button class="slide-btn next" onclick="changeSlide('slideshow1', 1)">›</button>
                     </div>
                     
-                    <div class="edu-card glass-panel">
+                    <div class="edu-card glass-panel tilt-card" data-tilt>
                         <i class="fas fa-graduation-cap edu-icon"></i>
                         <h3>Bachelor Of Media and Communication (Hons)</h3>
                         <p class="edu-meta">Albukhary International University | Oct 2021 - Oct 2024</p>
@@ -1942,18 +2127,16 @@
                     <div class="slideshow-container glass-panel" id="slideshow2">
                         <img src="photo_6161198919501681126_y.jpg" class="slide active" alt="Foundation studies photo 1">
                         <img src="Foundation Grad.jpg" class="slide" alt="Foundation studies photo 2">
-                        
                         <div class="dot-container" id="dots2">
                             <span class="dot active" data-index="0"></span>
                             <span class="dot" data-index="1"></span>
                             <span class="dot" data-index="2"></span>
                         </div>
-                        
                         <button class="slide-btn prev" onclick="changeSlide('slideshow2', -1)">‹</button>
                         <button class="slide-btn next" onclick="changeSlide('slideshow2', 1)">›</button>
                     </div>
                     
-                    <div class="edu-card glass-panel">
+                    <div class="edu-card glass-panel tilt-card" data-tilt>
                         <i class="fas fa-university edu-icon"></i>
                         <h3>Foundation Studies</h3>
                         <p class="edu-meta">Albukhary International University | 2020 - 2021</p>
@@ -1975,41 +2158,77 @@
         </div>
     </section>
 
+    <!-- ============================================================
+    WORKS
+    ============================================================ -->
     <section id="works" class="section">
         <div class="container">
             <h2 class="section-title">My Works</h2>
             <div class="portfolio-grid">
                 
-                <div class="portfolio-card glass-panel" onclick="openModal('photoModal')">
-                    <div class="card-image" style="background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);">
-                        <i class="fas fa-camera"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3>Photography Portfolio</h3>
-                        <p>Capturing structural narratives, event coverages, and campus aesthetics with refined balance and clarity.</p>
-                        <span class="vault-badge"><i class="fas fa-folder-open"></i> Open Photo Vault</span>
+                <div class="portfolio-card glass-panel tilt-card" data-tilt onclick="openModal('photoModal')">
+                    <div class="flip-container">
+                        <div class="flip-inner">
+                            <div class="flip-front">
+                                <div class="card-image" style="background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Photography Portfolio</h3>
+                                    <p>Capturing structural narratives, event coverages, and campus aesthetics.</p>
+                                    <span class="vault-badge"><i class="fas fa-folder-open"></i> Open Photo Vault</span>
+                                </div>
+                            </div>
+                            <div class="flip-back">
+                                <h3>📸 Photography</h3>
+                                <p>Event coverage • Campus aesthetics • Portrait • Documentary style</p>
+                                <p style="margin-top:10px;font-size:0.9rem;color:var(--text-muted);">Hover to flip back</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="portfolio-card glass-panel" onclick="openModal('videoModal')">
-                    <div class="card-image" style="background: linear-gradient(135deg, #fda4af 0%, #f43f5e 100%);">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3>Videography & Reels</h3>
-                        <p>High-engagement short-form video productions, marketing reels, corporate communications, and interview loops.</p>
-                        <span class="vault-badge"><i class="fas fa-play-circle"></i> Launch Reel Vault</span>
+                <div class="portfolio-card glass-panel tilt-card" data-tilt onclick="openModal('videoModal')">
+                    <div class="flip-container">
+                        <div class="flip-inner">
+                            <div class="flip-front">
+                                <div class="card-image" style="background: linear-gradient(135deg, #fda4af 0%, #f43f5e 100%);">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Videography & Reels</h3>
+                                    <p>High-engagement short-form video productions and marketing reels.</p>
+                                    <span class="vault-badge"><i class="fas fa-play-circle"></i> Launch Reel Vault</span>
+                                </div>
+                            </div>
+                            <div class="flip-back">
+                                <h3>🎬 Videography</h3>
+                                <p>Reels • Corporate videos • Interviews • Event highlights</p>
+                                <p style="margin-top:10px;font-size:0.9rem;color:var(--text-muted);">Hover to flip back</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="portfolio-card glass-panel" onclick="openModal('designModal')">
-                    <div class="card-image" style="background: linear-gradient(135deg, #d8b4fe 0%, #9333ea 100%);">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3>Graphic Design & Posters</h3>
-                        <p>Strategic communication assets, operational marketing posters, content layout templates, and public relations graphics.</p>
-                        <span class="vault-badge"><i class="fas fa-swatchbook"></i> Enter Design Vault</span>
+                <div class="portfolio-card glass-panel tilt-card" data-tilt onclick="openModal('designModal')">
+                    <div class="flip-container">
+                        <div class="flip-inner">
+                            <div class="flip-front">
+                                <div class="card-image" style="background: linear-gradient(135deg, #d8b4fe 0%, #9333ea 100%);">
+                                    <i class="fas fa-palette"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Graphic Design & Posters</h3>
+                                    <p>Strategic communication assets and marketing posters.</p>
+                                    <span class="vault-badge"><i class="fas fa-swatchbook"></i> Enter Design Vault</span>
+                                </div>
+                            </div>
+                            <div class="flip-back">
+                                <h3>🎨 Graphic Design</h3>
+                                <p>Posters • Brand assets • Social media graphics • Templates</p>
+                                <p style="margin-top:10px;font-size:0.9rem;color:var(--text-muted);">Hover to flip back</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -2017,13 +2236,15 @@
         </div>
     </section>
 
-    <!-- PHOTOGRAPHY MODAL -->
+    <!-- ============================================================
+    MODALS
+    ============================================================ -->
+    <!-- Photo Modal -->
     <div id="photoModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'photoModal')">
         <div class="modal-window">
             <button class="close-modal-btn" onclick="closeModal('photoModal')"><i class="fas fa-times"></i></button>
             <h3 class="modal-title">Photography Vault</h3>
             <p class="modal-desc">A curated archive of lifestyle, corporate event tracking, and content creation layout captures.</p>
-            
             <div class="media-showcase-grid">
                 <div class="showcase-item"><img src="IMG_7690.JPG" alt="Photography Work"></div>
                 <div class="showcase-item"><img src="IMG_0638.JPG" alt="Photography Work"></div>
@@ -2066,13 +2287,12 @@
         </div>
     </div>
 
-    <!-- VIDEOGRAPHY MODAL -->
+    <!-- Video Modal -->
     <div id="videoModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'videoModal')">
         <div class="modal-window">
             <button class="close-modal-btn" onclick="closeModal('videoModal')"><i class="fas fa-times"></i></button>
             <h3 class="modal-title">Videography Reel</h3>
             <p class="modal-desc">Short-form editing metrics and social campaign dynamic video highlights.</p>
-            
             <div class="video-grid">
                 <div><span><a href="https://drive.google.com/file/d/1AQvZUve4_ey3YfAfDRph6Qi88jFQWZaW/view?usp=sharing">Click this link to get to video</a></span><img src="13.png" alt="Marketing poster design"></div>
                 <div><span><a href="https://drive.google.com/file/d/1AQvZUve4_ey3YfAfDRph6Qi88jFQWZaW/view?usp=sharing">Click this link to get to video</a></span><img src="11.png" alt="Marketing poster design"></div>
@@ -2092,7 +2312,7 @@
         </div>
     </div>
 
-    <!-- GRAPHIC DESIGN MODAL -->
+    <!-- Design Modal -->
     <div id="designModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'designModal')">
         <div class="modal-window">
             <button class="close-modal-btn" onclick="closeModal('designModal')"><i class="fas fa-times"></i></button>
@@ -2109,13 +2329,15 @@
         </div>
     </div>
 
-    <!-- VOLUNTEER SECTION -->
+    <!-- ============================================================
+    VOLUNTEER
+    ============================================================ -->
     <section id="volunteer" class="section">
         <div class="container">
             <h2 class="section-title">Volunteer Experience</h2>
 
             <div class="volunteer-container">
-                <div class="volunteer-box glass-panel">
+                <div class="volunteer-box glass-panel tilt-card" data-tilt>
                     <div class="volunteer-slideshow" id="volunteerSlideshow1">
                         <img src="amsa vice president.jpg" class="slide active" alt="Vice President photo 1">
                         <img src="Screenshot (73).png" class="slide" alt="Vice President photo 2">
@@ -2138,7 +2360,7 @@
                     </div>
                 </div>
 
-                <div class="volunteer-box glass-panel">
+                <div class="volunteer-box glass-panel tilt-card" data-tilt>
                     <div class="volunteer-slideshow" id="volunteerSlideshow2">
                         <img src="photo shooting.jpg" class="slide active" alt="Media Unit photo 1">
                         <img src="IMG_7931.JPG" class="slide" alt="Media Unit photo 2">
@@ -2162,7 +2384,7 @@
                     </div>
                 </div>
 
-                <div class="volunteer-box glass-panel">
+                <div class="volunteer-box glass-panel tilt-card" data-tilt>
                     <div class="volunteer-slideshow" id="volunteerSlideshow3">
                         <img src="19800101000340_IMG_4070.jpg" class="slide active" alt="Project Hope photo 1">
                         <img src="IMG_0493.JPG" class="slide" alt="Project Hope photo 2">
@@ -2185,7 +2407,7 @@
                     </div>
                 </div>
 
-                <div class="volunteer-box glass-panel">
+                <div class="volunteer-box glass-panel tilt-card" data-tilt>
                     <div class="volunteer-slideshow" id="volunteerSlideshow4">
                         <img src="IMG_1731.JPG" class="slide active" alt="Project Hope photo 1">
                         <img src="IMG_1718.JPG" class="slide" alt="Project Hope photo 2">
@@ -2210,7 +2432,9 @@
         </div>
     </section>
 
-    <!-- SKILLS SECTION -->
+    <!-- ============================================================
+    SKILLS
+    ============================================================ -->
     <section id="skills" class="section">
         <div class="container">
             <h2 class="section-title">Skills & Toolkit</h2>
@@ -2278,26 +2502,28 @@
         </div>
     </section>
 
-    <!-- TESTIMONIALS -->
+    <!-- ============================================================
+    TESTIMONIALS
+    ============================================================ -->
     <section id="testimonials" class="section">
         <div class="container">
             <h2 class="section-title">Testimonials</h2>
             <div class="testimonials-grid">
-                <div class="testimonial-card glass-panel">
+                <div class="testimonial-card glass-panel tilt-card" data-tilt>
                     <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
                     <p class="testimonial-text">"Soe Min's attention to detail and creative vision made our campaign stand out. His ability to translate complex ideas into compelling visuals is exceptional."</p>
                     <div class="testimonial-author">— John Doe</div>
                     <div class="testimonial-role">Marketing Director, Global Gateway Fz LLC</div>
                 </div>
 
-                <div class="testimonial-card glass-panel">
+                <div class="testimonial-card glass-panel tilt-card" data-tilt>
                     <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
                     <p class="testimonial-text">"Working with Soe Min was a game-changer for our social media presence. His content strategy increased our engagement by over 40% in just three months."</p>
                     <div class="testimonial-author">— Jane Smith</div>
                     <div class="testimonial-role">Communications Manager, Universiti Utara Malaysia</div>
                 </div>
 
-                <div class="testimonial-card glass-panel">
+                <div class="testimonial-card glass-panel tilt-card" data-tilt>
                     <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
                     <p class="testimonial-text">"Soe Min's photography and videography work captured the essence of our events perfectly. His professional approach and creative eye are unmatched."</p>
                     <div class="testimonial-author">— Ahmad Ridzuan</div>
@@ -2307,28 +2533,30 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- ============================================================
+    CONTACT
+    ============================================================ -->
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
             <p class="contact-subtitle">Let's connect! Reach out through any of the channels below.</p>
             
             <div class="contact-grid">
-                <a href="mailto:minsithusoe456.business@gmail.com" class="contact-card glass-panel email">
+                <a href="mailto:minsithusoe456.business@gmail.com" class="contact-card glass-panel tilt-card email" data-tilt>
                     <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                     <div class="contact-label">Email</div>
                     <div class="contact-value">minsithusoe456@gmail.com</div>
                     <div class="contact-arrow"><i class="fas fa-arrow-right"></i> Send Message</div>
                 </a>
 
-                <a href="https://wa.me/60147256574" target="_blank" class="contact-card glass-panel whatsapp">
+                <a href="https://wa.me/60147256574" target="_blank" class="contact-card glass-panel tilt-card whatsapp" data-tilt>
                     <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
                     <div class="contact-label">WhatsApp</div>
                     <div class="contact-value">+60 14-725-6574</div>
                     <div class="contact-arrow"><i class="fas fa-arrow-right"></i> Chat Now</div>
                 </a>
 
-                <a href="https://www.linkedin.com/in/soe-min-si-thu-266360344?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="contact-card glass-panel linkedin">
+                <a href="https://www.linkedin.com/in/soe-min-si-thu-266360344?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="contact-card glass-panel tilt-card linkedin" data-tilt>
                     <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
                     <div class="contact-label">LinkedIn</div>
                     <div class="contact-value">linkedin.com/in/soeminsithu</div>
@@ -2338,27 +2566,30 @@
 
             <div id="cv-download" class="cv-download-section">
                 <p><i class="fas fa-file-pdf" style="color: var(--accent); margin-right: 10px;"></i>Ready to see my full professional profile?</p>
-                <a href="https://drive.google.com/file/d/1FEPg3u_HhCxeYShRQbKgKF3iQUlPLoFD/view?usp=sharing" class="btn-primary">
+                <a href="https://drive.google.com/file/d/1FEPg3u_HhCxeYShRQbKgKF3iQUlPLoFD/view?usp=sharing" class="btn-primary" data-magnetic>
                     <i class="fas fa-download"></i> Download My CV
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
     <footer class="footer">
         <div class="container">
             <p>&copy; @SoeMinSithu2026</p>
         </div>
     </footer>
 
+    <!-- ============================================================
+    JAVASCRIPT - ALL ANIMATIONS
+    ============================================================ -->
     <script>
-        // ==========================================================================
-        // FULL ANIMATION SYSTEM
-        // ==========================================================================
         document.addEventListener('DOMContentLoaded', function() {
 
             // ================================================================
-            // 0. TYPING EFFECT
+            // 1. TYPING EFFECT WITH CURSOR
             // ================================================================
             const phrases = [
                 'A Digital Storyteller 📱',
@@ -2376,10 +2607,10 @@
                 const currentPhrase = phrases[phraseIndex];
                 
                 if (isDeleting) {
-                    typedElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                    typedElement.innerHTML = currentPhrase.substring(0, charIndex - 1) + '<span class="cursor">|</span>';
                     charIndex--;
                 } else {
-                    typedElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                    typedElement.innerHTML = currentPhrase.substring(0, charIndex + 1) + '<span class="cursor">|</span>';
                     charIndex++;
                 }
                 
@@ -2399,7 +2630,7 @@
             typeEffect();
 
             // ================================================================
-            // 1. SLIDESHOWS
+            // 2. SLIDESHOWS
             // ================================================================
             let slideIntervals = {};
 
@@ -2470,7 +2701,6 @@
                 startAutoSlide(containerId);
             }
 
-            // Volunteer slideshows
             let volunteerSlideIntervals = {};
 
             window.changeVolunteerSlide = function(containerId, direction) {
@@ -2540,7 +2770,6 @@
                 startVolunteerAutoSlide(containerId);
             }
 
-            // Initialize all slideshows
             initSlideshow('slideshow1');
             initSlideshow('slideshow2');
             initVolunteerSlideshow('volunteerSlideshow1');
@@ -2548,7 +2777,6 @@
             initVolunteerSlideshow('volunteerSlideshow3');
             initVolunteerSlideshow('volunteerSlideshow4');
 
-            // Pause on hover
             document.querySelectorAll('.slideshow-container, .volunteer-slideshow').forEach(container => {
                 container.addEventListener('mouseenter', function() {
                     const id = this.id;
@@ -2563,7 +2791,137 @@
             });
 
             // ================================================================
-            // 2. SCROLL ANIMATIONS WITH INTERSECTION OBSERVER
+            // 3. SPOTLIGHT EFFECT
+            // ================================================================
+            const spotlight = document.getElementById('spotlight');
+            
+            document.addEventListener('mousemove', function(e) {
+                const x = e.clientX;
+                const y = e.clientY;
+                spotlight.style.setProperty('--x', x + 'px');
+                spotlight.style.setProperty('--y', y + 'px');
+            });
+
+            // ================================================================
+            // 4. PROGRESS BAR
+            // ================================================================
+            const progressBar = document.getElementById('progress-bar');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                progressBar.style.width = progress + '%';
+            });
+
+            // ================================================================
+            // 5. CONNECTING LINES (Media Constellation)
+            // ================================================================
+            const canvas = document.getElementById('line-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            const iconElements = document.querySelectorAll('.media-icon');
+            const iconPositions = [];
+
+            function updateIconPositions() {
+                iconPositions.length = 0;
+                iconElements.forEach(icon => {
+                    const rect = icon.getBoundingClientRect();
+                    iconPositions.push({
+                        x: rect.left + rect.width / 2,
+                        y: rect.top + rect.height / 2
+                    });
+                });
+            }
+
+            function drawLines() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                updateIconPositions();
+                
+                const threshold = 250;
+                
+                for (let i = 0; i < iconPositions.length; i++) {
+                    for (let j = i + 1; j < iconPositions.length; j++) {
+                        const dx = iconPositions[i].x - iconPositions[j].x;
+                        const dy = iconPositions[i].y - iconPositions[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < threshold) {
+                            const opacity = 1 - (distance / threshold);
+                            ctx.beginPath();
+                            ctx.moveTo(iconPositions[i].x, iconPositions[i].y);
+                            ctx.lineTo(iconPositions[j].x, iconPositions[j].y);
+                            ctx.strokeStyle = `rgba(79, 70, 229, ${opacity * 0.15})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(drawLines);
+            }
+
+            drawLines();
+
+            // ================================================================
+            // 6. 3D TILT CARDS
+            // ================================================================
+            const tiltElements = document.querySelectorAll('[data-tilt]');
+            
+            tiltElements.forEach(el => {
+                el.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    
+                    this.style.setProperty('--tilt-x', rotateX + 'deg');
+                    this.style.setProperty('--tilt-y', rotateY + 'deg');
+                });
+                
+                el.addEventListener('mouseleave', function() {
+                    this.style.setProperty('--tilt-x', '0deg');
+                    this.style.setProperty('--tilt-y', '0deg');
+                });
+            });
+
+            // ================================================================
+            // 7. MAGNETIC BUTTONS
+            // ================================================================
+            const magneticBtns = document.querySelectorAll('[data-magnetic]');
+            
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const moveX = (x - centerX) / centerX * 12;
+                    const moveY = (y - centerY) / centerY * 12;
+                    
+                    this.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translate(0, 0) scale(1)';
+                });
+            });
+
+            // ================================================================
+            // 8. SCROLL ANIMATIONS
             // ================================================================
             const observerOptions = {
                 threshold: 0.15,
@@ -2578,6 +2936,7 @@
                 });
             }, observerOptions);
 
+            document.querySelectorAll('.section').forEach(el => observer.observe(el));
             document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
             document.querySelectorAll('.edu-row').forEach(el => observer.observe(el));
             document.querySelectorAll('.portfolio-card').forEach(el => observer.observe(el));
@@ -2586,9 +2945,10 @@
             document.querySelectorAll('.skill-bar-group').forEach(el => observer.observe(el));
             document.querySelectorAll('.testimonial-card').forEach(el => observer.observe(el));
             document.querySelectorAll('.contact-card').forEach(el => observer.observe(el));
+            document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
 
             // ================================================================
-            // 3. COUNT-UP ANIMATION FOR STATS
+            // 9. COUNT-UP ANIMATION
             // ================================================================
             let statsAnimated = false;
 
@@ -2608,9 +2968,7 @@
                     const target = parseInt(stat.getAttribute('data-count'));
                     let current = 0;
                     const increment = Math.ceil(target / 50);
-                    const duration = 1500;
-                    const stepTime = Math.floor(duration / (target / increment));
-
+                    
                     const timer = setInterval(() => {
                         current += increment;
                         if (current >= target) {
@@ -2619,12 +2977,12 @@
                         } else {
                             stat.textContent = current;
                         }
-                    }, stepTime);
+                    }, 30);
                 });
             }
 
             // ================================================================
-            // 4. SKILL BARS ANIMATION
+            // 10. SKILL BARS ANIMATION
             // ================================================================
             let skillBarsAnimated = false;
 
@@ -2650,7 +3008,7 @@
             }
 
             // ================================================================
-            // 5. NAVBAR SCROLL EFFECT
+            // 11. NAVBAR SCROLL
             // ================================================================
             const navbar = document.getElementById('navbar');
             
@@ -2671,7 +3029,7 @@
             }, 500);
 
             // ================================================================
-            // 6. MODALS
+            // 12. MODALS
             // ================================================================
             window.openModal = function(modalId) {
                 const modal = document.getElementById(modalId);
@@ -2703,7 +3061,7 @@
             }
 
             // ================================================================
-            // 7. ACTIVE NAVIGATION
+            // 13. ACTIVE NAVIGATION
             // ================================================================
             const sections = document.querySelectorAll("section");
             const navLi = document.querySelectorAll(".nav-links li a");
@@ -2727,7 +3085,7 @@
             });
 
             // ================================================================
-            // 8. MOBILE NAV TOGGLE
+            // 14. MOBILE NAV TOGGLE
             // ================================================================
             const navLinksList = document.querySelectorAll('.nav-links a');
             const toggleCheckbox = document.getElementById('menu-toggle');
