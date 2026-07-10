@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
-           1. VARIABLES & CORE MESH ARCHITECTURE (The Aesthetic Strategist)
+           1. VARIABLES & CORE MESH ARCHITECTURE
            ========================================================================== */
         :root {
             --bg-glass: rgba(255, 255, 255, 0.45);
@@ -49,6 +49,92 @@
             overflow-x: hidden;
         }
 
+        /* ==========================================================================
+           BACKGROUND MEDIA CONSTELLATION ANIMATION
+           ========================================================================== */
+        #media-constellation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .media-icon {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.08;
+            color: var(--accent);
+            animation: floatIcon 20s ease-in-out infinite alternate;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            user-select: none;
+        }
+
+        .media-icon:hover {
+            opacity: 0.25;
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        .media-icon:nth-child(1) { top: 5%; left: 3%; animation-duration: 22s; font-size: 2.2rem; }
+        .media-icon:nth-child(2) { top: 12%; right: 8%; animation-duration: 18s; animation-delay: -2s; font-size: 1.6rem; }
+        .media-icon:nth-child(3) { top: 25%; left: 12%; animation-duration: 25s; animation-delay: -5s; font-size: 2rem; }
+        .media-icon:nth-child(4) { top: 40%; right: 5%; animation-duration: 20s; animation-delay: -8s; font-size: 1.4rem; }
+        .media-icon:nth-child(5) { top: 55%; left: 7%; animation-duration: 28s; animation-delay: -3s; font-size: 2.5rem; }
+        .media-icon:nth-child(6) { top: 70%; right: 10%; animation-duration: 16s; animation-delay: -6s; font-size: 1.8rem; }
+        .media-icon:nth-child(7) { top: 85%; left: 15%; animation-duration: 24s; animation-delay: -10s; font-size: 1.5rem; }
+        .media-icon:nth-child(8) { top: 18%; left: 45%; animation-duration: 30s; animation-delay: -4s; font-size: 1.2rem; }
+        .media-icon:nth-child(9) { top: 48%; left: 30%; animation-duration: 19s; animation-delay: -7s; font-size: 2rem; }
+        .media-icon:nth-child(10) { top: 78%; left: 50%; animation-duration: 26s; animation-delay: -9s; font-size: 1.6rem; }
+        .media-icon:nth-child(11) { top: 8%; left: 70%; animation-duration: 21s; animation-delay: -1s; font-size: 2.2rem; }
+        .media-icon:nth-child(12) { top: 35%; left: 80%; animation-duration: 23s; animation-delay: -12s; font-size: 1.3rem; }
+        .media-icon:nth-child(13) { top: 62%; left: 65%; animation-duration: 27s; animation-delay: -5s; font-size: 1.9rem; }
+        .media-icon:nth-child(14) { top: 92%; left: 80%; animation-duration: 17s; animation-delay: -8s; font-size: 2rem; }
+        .media-icon:nth-child(15) { top: 50%; left: 90%; animation-duration: 29s; animation-delay: -3s; font-size: 1.5rem; }
+
+        @keyframes floatIcon {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(30px, -20px) rotate(5deg) scale(1.1); }
+            50% { transform: translate(-20px, 30px) rotate(-3deg) scale(0.9); }
+            75% { transform: translate(40px, 10px) rotate(7deg) scale(1.05); }
+            100% { transform: translate(-30px, -30px) rotate(-5deg) scale(0.95); }
+        }
+
+        /* Connecting lines between icons */
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.05), transparent);
+            height: 1px;
+            transform-origin: left center;
+            animation: pulseLine 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseLine {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.4; }
+        }
+
+        /* Floating orbs / light particles */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.06) 0%, transparent 70%);
+            animation: orbFloat 15s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .orb:nth-child(1) { width: 300px; height: 300px; top: 10%; left: -5%; animation-duration: 18s; }
+        .orb:nth-child(2) { width: 400px; height: 400px; bottom: 10%; right: -10%; animation-duration: 22s; animation-delay: -5s; }
+        .orb:nth-child(3) { width: 200px; height: 200px; top: 50%; left: 50%; animation-duration: 20s; animation-delay: -10s; }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -30px) scale(1.2); }
+            100% { transform: translate(-40px, 40px) scale(0.8); }
+        }
+
         .ambient-glow-1 {
             position: absolute;
             width: 400px;
@@ -60,7 +146,9 @@
             left: -10%;
             z-index: -1;
             pointer-events: none;
+            animation: driftGlow 20s ease-in-out infinite alternate;
         }
+        
         .ambient-glow-2 {
             position: absolute;
             width: 500px;
@@ -72,8 +160,22 @@
             right: -10%;
             z-index: -1;
             pointer-events: none;
+            animation: driftGlow2 25s ease-in-out infinite alternate;
         }
 
+        @keyframes driftGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 40px) scale(1.2); }
+        }
+
+        @keyframes driftGlow2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-50px, -30px) scale(1.3); }
+        }
+
+        /* ==========================================================================
+           GLASS & CONTAINER STYLES
+           ========================================================================== */
         .glass-panel {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
@@ -82,6 +184,7 @@
             border-radius: 20px;
             box-shadow: var(--glass-shadow);
             position: relative;
+            z-index: 1;
         }
 
         .container {
@@ -89,10 +192,14 @@
             max-width: 1150px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .section {
             padding: 120px 0;
+            position: relative;
+            z-index: 1;
         }
 
         .section-title {
@@ -125,10 +232,28 @@
             box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-primary:hover::after {
+            transform: rotate(45deg) translateX(100%);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 30px rgba(79, 70, 229, 0.55);
             border-color: rgba(255, 255, 255, 0.5);
         }
@@ -144,13 +269,31 @@
             border: 2px solid var(--accent);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             margin-left: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-secondary:hover::after {
+            opacity: 1;
         }
 
         .btn-secondary:hover {
-            background: var(--accent-gradient);
             color: white;
             border-color: transparent;
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 30px rgba(79, 70, 229, 0.35);
         }
 
@@ -162,7 +305,7 @@
         }
 
         /* ==========================================================================
-           2. NAVIGATION DESIGN ARCHITECTURE
+           NAVIGATION
            ========================================================================== */
         .navbar {
             position: fixed;
@@ -181,6 +324,12 @@
             transition: all 0.3s ease;
         }
 
+        .navbar.scrolled {
+            top: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -195,6 +344,11 @@
             text-decoration: none;
             letter-spacing: -0.5px;
             z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo span {
@@ -219,6 +373,24 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             display: inline-block;
+            position: relative;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 60%;
         }
 
         .nav-links li a:hover, .nav-links li a.active {
@@ -233,6 +405,11 @@
             color: var(--text-main);
             cursor: pointer;
             z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            transform: rotate(90deg);
         }
 
         #menu-toggle {
@@ -240,7 +417,7 @@
         }
 
         /* ==========================================================================
-           3. HERO / VISUAL STORYTELLER COMPONENT
+           HERO
            ========================================================================== */
         .hero-section {
             padding: 220px 0 120px 0;
@@ -259,17 +436,28 @@
             line-height: 1.15;
             margin-bottom: 20px;
             letter-spacing: -1.5px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
         }
 
         .hero-content h1 .highlight {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
         }
 
         #typed-text {
             display: inline-block;
             min-height: 4.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
         }
 
         .hero-content h2 {
@@ -277,6 +465,8 @@
             color: var(--text-body);
             font-weight: 600;
             margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
         }
 
         .lead-text {
@@ -284,9 +474,21 @@
             color: var(--text-body);
             margin-bottom: 40px;
             text-align: justify;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
         }
 
-        /* Stats Bar */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .stats-bar {
             display: flex;
             flex-wrap: wrap;
@@ -295,6 +497,8 @@
             padding: 20px 0;
             border-top: 1px solid rgba(79, 70, 229, 0.1);
             border-bottom: 1px solid rgba(79, 70, 229, 0.1);
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.2s forwards;
         }
 
         .stat-item {
@@ -330,6 +534,12 @@
             justify-content: center;
             padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.7);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .profile-photo {
@@ -337,10 +547,20 @@
             height: 100%;
             object-fit: cover;
             border-radius: 12px;
+            transition: transform 0.6s ease;
+        }
+
+        .profile-photo-container:hover .profile-photo {
+            transform: scale(1.03);
+        }
+
+        .btn-group {
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.5s forwards;
         }
 
         /* ==========================================================================
-           4. STRATEGIC TIMELINE COMPONENT
+           TIMELINE
            ========================================================================== */
         .timeline {
             position: relative;
@@ -351,6 +571,14 @@
         .timeline-item {
             position: relative;
             margin-bottom: 50px;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .timeline-item::before {
@@ -364,11 +592,24 @@
             background: var(--accent-gradient);
             border: 3px solid #ffffff;
             box-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
         }
 
         .timeline-card {
             padding: 35px;
             border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-card:hover {
+            transform: translateX(10px) scale(1.01);
+            background: var(--bg-glass-hover);
+            box-shadow: 0 25px 50px -15px rgba(79, 70, 229, 0.2);
         }
 
         .timeline-date {
@@ -392,16 +633,6 @@
             font-size: 1rem;
         }
 
-        .timeline-content p {
-            color: var(--text-body);
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-        
-        .timeline-content p:last-child {
-            margin-bottom: 0;
-        }
-
         .timeline-content ul {
             list-style: none;
             padding: 0;
@@ -413,6 +644,7 @@
             padding: 4px 0 4px 25px;
             position: relative;
             font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .timeline-content ul li::before {
@@ -421,6 +653,11 @@
             left: 0;
             color: var(--accent);
             font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content ul li:hover::before {
+            transform: translateX(5px);
         }
 
         .achievement-highlight {
@@ -430,10 +667,17 @@
             border-radius: 6px;
             font-weight: 700;
             color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-highlight:hover {
+            background: var(--accent-gradient);
+            color: white;
+            transform: scale(1.05);
         }
 
         /* ==========================================================================
-           5. EDUCATION MODERNIZED ROW DESIGN WITH SLIDESHOW
+           EDUCATION
            ========================================================================== */
         .education-container {
             display: flex;
@@ -445,6 +689,14 @@
             display: flex;
             align-items: center;
             gap: 40px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .edu-row.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .edu-row.reverse {
@@ -454,12 +706,13 @@
         .edu-card {
             flex: 1.4;
             padding: 40px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .edu-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-8px) scale(1.01);
             background: var(--bg-glass-hover);
+            box-shadow: 0 25px 50px -15px rgba(79, 70, 229, 0.2);
         }
 
         .edu-icon {
@@ -469,6 +722,12 @@
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .edu-card:hover .edu-icon {
+            transform: rotate(-5deg) scale(1.1);
         }
 
         .edu-card h3 {
@@ -497,6 +756,13 @@
             margin: 4px 4px 4px 0;
             font-weight: 600;
             font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .edu-details span:hover {
+            background: var(--accent-gradient);
+            color: white;
+            transform: translateY(-2px);
         }
 
         .slideshow-container {
@@ -507,10 +773,6 @@
             position: relative;
             box-shadow: var(--glass-shadow);
             border: 1px solid var(--border-glass);
-        }
-
-        .edu-row.reverse .slideshow-container {
-            animation-delay: 3s;
         }
 
         .slide {
@@ -563,6 +825,7 @@
 
         .dot:hover {
             background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.1);
         }
 
         .slide-btn {
@@ -588,7 +851,7 @@
 
         .slide-btn:hover {
             background: rgba(255, 255, 255, 0.6);
-            transform: translateY(-50%) scale(1.05);
+            transform: translateY(-50%) scale(1.1);
         }
 
         .slide-btn.prev {
@@ -600,7 +863,7 @@
         }
 
         /* ==========================================================================
-           6. CASE STUDIES / EXPANDED WORK ARCHITECTURE WITH MODALS
+           PORTFOLIO CARDS
            ========================================================================== */
         .portfolio-grid {
             display: grid;
@@ -612,11 +875,18 @@
             overflow: hidden;
             cursor: pointer;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, background 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .portfolio-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .portfolio-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-12px) scale(1.02);
             background: var(--bg-glass-hover);
             box-shadow: 0 30px 60px -15px rgba(79, 70, 229, 0.25);
         }
@@ -629,17 +899,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.6s ease;
+        }
+
+        .portfolio-card:hover .card-image {
+            transform: scale(1.05);
         }
 
         .card-image i {
             font-size: 3.5rem;
             color: white;
             z-index: 2;
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .portfolio-card:hover .card-image i {
-            transform: scale(1.15);
+            transform: scale(1.2) rotate(-5deg);
         }
 
         .card-image::after {
@@ -648,6 +923,11 @@
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.15);
             z-index: 1;
+            transition: all 0.6s ease;
+        }
+
+        .portfolio-card:hover .card-image::after {
+            background: rgba(0, 0, 0, 0.25);
         }
 
         .card-content {
@@ -658,6 +938,11 @@
             margin-bottom: 12px;
             font-size: 1.5rem;
             font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .portfolio-card:hover .card-content h3 {
+            color: var(--accent);
         }
 
         .card-content p {
@@ -677,9 +962,19 @@
             font-weight: 700;
             color: var(--accent);
             box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Blur Overlay Modal Windows Framework */
+        .portfolio-card:hover .vault-badge {
+            background: var(--accent-gradient);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        /* ==========================================================================
+           MODALS
+           ========================================================================== */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -692,7 +987,7 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
             padding: 20px;
         }
 
@@ -710,14 +1005,14 @@
             border-radius: 24px;
             box-shadow: 0 30px 70px rgba(0,0,0,0.2);
             overflow-y: auto;
-            transform: translateY(30px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 40px;
             position: relative;
         }
 
         .modal-overlay.active .modal-window {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .close-modal-btn {
@@ -734,14 +1029,14 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             font-size: 1.1rem;
             color: var(--text-main);
-            transition: all 0.2s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 10;
         }
 
         .close-modal-btn:hover {
             background: #ef4444;
             color: white;
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
         }
 
         .modal-title {
@@ -757,7 +1052,6 @@
             margin-bottom: 30px;
         }
 
-        /* Video Grid Layout */
         .video-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -773,6 +1067,11 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             background: #000;
+            transition: transform 0.3s ease;
+        }
+
+        .video-item:hover {
+            transform: scale(1.02);
         }
 
         .video-item video,
@@ -786,69 +1085,6 @@
             grid-column: 1 / -1;
         }
 
-        .video-context {
-            margin-top: 10px;
-            padding: 15px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 12px;
-            border-left: 4px solid var(--accent);
-        }
-
-        .video-context h4 {
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 4px;
-        }
-
-        .video-context p {
-            color: var(--text-body);
-            font-size: 0.9rem;
-        }
-
-        /* Design Grid Layout */
-        .design-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .design-item {
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .design-item:hover {
-            transform: scale(1.02);
-        }
-
-        .design-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .design-item .design-label {
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.8);
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-
-        .design-item .design-context {
-            padding: 8px 16px 14px;
-            background: rgba(255, 255, 255, 0.5);
-            font-size: 0.85rem;
-            color: var(--text-body);
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-
-        /* ==========================================================================
-           7. MEDIA SHOWCASE GRID (PHOTOGRAPHY/GALLERY)
-           ========================================================================== */
         .media-showcase-grid {
             columns: 3 250px;
             column-gap: 20px;
@@ -863,39 +1099,55 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.05);
             border: 1px solid white;
             position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .showcase-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.15);
         }
         .showcase-item img {
             width: 100%;
             height: auto !important;
             display: block;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .showcase-item:hover img {
-            transform: scale(1.04);
-        }
-        .showcase-item .photo-context {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 15px 12px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .showcase-item:hover .photo-context {
-            opacity: 1;
+            transform: scale(1.08);
         }
 
-        @media(max-width:992px){.media-showcase-grid{columns:2 200px;}}
-        @media(max-width:600px){.media-showcase-grid{columns:1;}}
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .design-item {
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .design-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.15);
+        }
+
+        .design-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .design-item:hover img {
+            transform: scale(1.05);
+        }
 
         /* ==========================================================================
-           8. STRATEGIC OUTREACH / VOLUNTEER SECTION WITH SLIDESHOW
+           VOLUNTEER
            ========================================================================== */
         .volunteer-container {
             display: flex;
@@ -909,13 +1161,21 @@
             gap: 20px;
             padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .volunteer-box.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .volunteer-box:hover {
-            transform: translateX(8px);
+            transform: translateX(12px) scale(1.01);
             background: var(--bg-glass-hover);
+            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.1);
         }
 
         .volunteer-slideshow {
@@ -979,6 +1239,7 @@
 
         .volunteer-slideshow .dot:hover {
             background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.1);
         }
 
         .volunteer-slideshow .slide-btn {
@@ -1004,7 +1265,7 @@
 
         .volunteer-slideshow .slide-btn:hover {
             background: rgba(255, 255, 255, 0.5);
-            transform: translateY(-50%) scale(1.05);
+            transform: translateY(-50%) scale(1.1);
         }
 
         .volunteer-slideshow .slide-btn.prev {
@@ -1023,6 +1284,11 @@
             font-size: 1.4rem;
             margin-bottom: 4px;
             font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .volunteer-box:hover .vol-item h3 {
+            color: var(--accent);
         }
 
         .vol-meta {
@@ -1045,6 +1311,7 @@
             padding: 3px 0 3px 22px;
             position: relative;
             font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
         .vol-item ul li::before {
@@ -1053,10 +1320,15 @@
             left: 0;
             color: var(--accent);
             font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .volunteer-box:hover .vol-item ul li::before {
+            transform: translateX(5px);
         }
 
         /* ==========================================================================
-           9. MEDIA INTERFACE SKILLS COMPONENT
+           SKILLS
            ========================================================================== */
         .skills-container {
             display: flex;
@@ -1071,23 +1343,41 @@
             font-size: 0.95rem;
             border: 1px solid rgba(255, 255, 255, 0.5);
             border-radius: 12px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: scale(0.8);
+            cursor: default;
+        }
+
+        .skill-tag.visible {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .skill-tag:hover {
             background: var(--accent-gradient);
             color: white;
             border-color: transparent;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
         }
 
-        /* Skill Bars */
         .skill-bars-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px 50px;
             margin-top: 40px;
+        }
+
+        .skill-bar-group {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .skill-bar-group.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .skill-bar-group h4 {
@@ -1135,7 +1425,7 @@
             height: 100%;
             border-radius: 6px;
             background: var(--accent-gradient);
-            transition: width 1s ease;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
             width: 0;
         }
 
@@ -1144,7 +1434,7 @@
         }
 
         /* ==========================================================================
-           10. TESTIMONIALS SECTION
+           TESTIMONIALS
            ========================================================================== */
         .testimonials-grid {
             display: grid;
@@ -1155,12 +1445,20 @@
         .testimonial-card {
             padding: 35px;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .testimonial-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.01);
             background: var(--bg-glass-hover);
+            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
         }
 
         .testimonial-card .quote-icon {
@@ -1168,6 +1466,12 @@
             color: var(--accent);
             opacity: 0.3;
             margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover .quote-icon {
+            opacity: 0.6;
+            transform: scale(1.1);
         }
 
         .testimonial-card .testimonial-text {
@@ -1189,13 +1493,15 @@
         }
 
         /* ==========================================================================
-           11. CONTACT SECTION - REDESIGNED
+           CONTACT
            ========================================================================== */
         .contact-subtitle {
             text-align: center;
             color: var(--text-body);
             margin-bottom: 40px;
             font-weight: 500;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease 0.3s forwards;
         }
 
         .contact-grid {
@@ -1209,7 +1515,7 @@
         .contact-card {
             padding: 35px 25px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             border: 1px solid rgba(255, 255, 255, 0.5);
             text-decoration: none;
             color: var(--text-main);
@@ -1217,12 +1523,19 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .contact-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .contact-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px) scale(1.02);
             background: var(--bg-glass-hover);
-            box-shadow: 0 20px 50px -15px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 25px 50px -15px rgba(79, 70, 229, 0.25);
         }
 
         .contact-card .contact-icon {
@@ -1236,7 +1549,7 @@
             color: white;
             background: var(--accent-gradient);
             box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
-            transition: transform 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .contact-card:hover .contact-icon {
@@ -1260,16 +1573,15 @@
             color: var(--accent);
             font-size: 0.9rem;
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             margin-top: 5px;
         }
 
         .contact-card:hover .contact-arrow {
             opacity: 1;
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
-        /* Individual contact card color variants */
         .contact-card.email .contact-icon {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
@@ -1285,7 +1597,6 @@
             box-shadow: 0 8px 24px rgba(10, 102, 194, 0.35);
         }
 
-        /* CV Download Button in Contact */
         .cv-download-section {
             text-align: center;
             margin-top: 50px;
@@ -1300,7 +1611,7 @@
         }
 
         /* ==========================================================================
-           12. FOOTER SYSTEM
+           FOOTER
            ========================================================================== */
         .footer {
             text-align: center;
@@ -1311,9 +1622,13 @@
             opacity: 0.8;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Mobile Responsive Constraints */
+        /* ==========================================================================
+           RESPONSIVE
+           ========================================================================== */
         @media (max-width: 968px) {
             .navbar {
                 top: 0;
@@ -1411,6 +1726,13 @@
             .stats-bar {
                 justify-content: center;
             }
+            .media-showcase-grid {
+                columns: 2 200px;
+            }
+            #media-constellation .media-icon {
+                opacity: 0.04;
+                font-size: 1.2rem !important;
+            }
         }
 
         @media (max-width: 600px) {
@@ -1429,15 +1751,49 @@
             .hero-content h2 {
                 font-size: 1.3rem;
             }
+            .media-showcase-grid {
+                columns: 1;
+            }
+            #media-constellation .media-icon {
+                opacity: 0.025;
+                font-size: 1rem !important;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- ============================================================
+    BACKGROUND MEDIA CONSTELLATION
+    ============================================================ -->
+    <div id="media-constellation">
+        <!-- Media Icons Floating Around -->
+        <i class="fas fa-camera media-icon"></i>
+        <i class="fas fa-video media-icon"></i>
+        <i class="fas fa-pen-fancy media-icon"></i>
+        <i class="fas fa-music media-icon"></i>
+        <i class="fas fa-film media-icon"></i>
+        <i class="fas fa-palette media-icon"></i>
+        <i class="fas fa-bullhorn media-icon"></i>
+        <i class="fas fa-newspaper media-icon"></i>
+        <i class="fas fa-photo-video media-icon"></i>
+        <i class="fas fa-podcast media-icon"></i>
+        <i class="fas fa-tv media-icon"></i>
+        <i class="fas fa-headphones media-icon"></i>
+        <i class="fas fa-globe media-icon"></i>
+        <i class="fas fa-share-alt media-icon"></i>
+        <i class="fas fa-chart-line media-icon"></i>
+
+        <!-- Floating Orbs -->
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
     <div class="ambient-glow-1"></div>
     <div class="ambient-glow-2"></div>
 
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">SoeMin<span>Sithu</span></a>
             
@@ -1452,7 +1808,7 @@
                 <li><a href="#volunteer">Volunteering</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact">Contact Me </a></li>
+                <li><a href="#contact">Contact Me</a></li>
             </ul>
         </div>
     </nav>
@@ -1467,15 +1823,15 @@
                 
                 <div class="stats-bar">
                     <div class="stat-item">
-                        <span class="stat-number">2+</span>
+                        <span class="stat-number" data-count="2">0</span>
                         <span class="stat-label">Years Experience</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">50+</span>
+                        <span class="stat-number" data-count="50">0</span>
                         <span class="stat-label">Content Pieces</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">10+</span>
+                        <span class="stat-number" data-count="10">0</span>
                         <span class="stat-label">Projects Completed</span>
                     </div>
                 </div>
@@ -1500,8 +1856,7 @@
                     <div class="timeline-card glass-panel">
                         <div class="timeline-date">2025 Feb - Present</div>
                         <div class="timeline-content">
-                            <h3>Freelance Content Creator </h3>
-                           
+                            <h3>Freelance Content Creator</h3>
                             <ul>
                                 <li>Professional freelance services are provided across photography, graphic design, and video editing.</li>
                                 <li>Diverse creative projects have been handled, with visual content being developed for both digital and print media.</li>
@@ -1518,10 +1873,8 @@
                             <h4>Global Gateway Fz LLC - UAE (Remote)</h4>
                             <ul>
                                 <li>Developed and executed monthly content calendars for Facebook and other digital platforms.</li>
-                                <li>Produced and edited short-form video content (Reels) on UAE business setup for Instagram,
-Facebook, and YouTube.</span></li>
-                                <li>Designed creative visuals and marketing materials, including promotional posts and holiday
-                                campaigns.</li>
+                                <li>Produced and edited short-form video content (Reels) on UAE business setup for Instagram, Facebook, and YouTube.</li>
+                                <li>Designed creative visuals and marketing materials, including promotional posts and holiday campaigns.</li>
                             </ul>
                         </div>
                     </div>
@@ -1533,12 +1886,9 @@ Facebook, and YouTube.</span></li>
                             <h3>Corporate Communication Intern</h3>
                             <h4>Universiti Utara Malaysia - Corporate Communication Department</h4>
                             <ul>
-                                <li>Managed social media platforms (Instagram, YouTube, TikTok), including content planning,
-                                scheduling, and optimization aligned with SEO best practices.</li>
-                                <li>Created engaging short-form content (Reels) to promote university events and key campus
-                               attractions, enhancing audience engagement and visibility.</li>
-                                <li>Produced and edited motion-based news and event coverage by transforming articles and raw
-                                footage into engaging, high-quality video content, including interviews and highlight reels.</li>
+                                <li>Managed social media platforms (Instagram, YouTube, TikTok), including content planning, scheduling, and optimization aligned with SEO best practices.</li>
+                                <li>Created engaging short-form content (Reels) to promote university events and key campus attractions, enhancing audience engagement and visibility.</li>
+                                <li>Produced and edited motion-based news and event coverage by transforming articles and raw footage into engaging, high-quality video content, including interviews and highlight reels.</li>
                             </ul>
                         </div>
                     </div>
@@ -1552,10 +1902,9 @@ Facebook, and YouTube.</span></li>
             <h2 class="section-title">Education</h2>
             <div class="education-container">
                 
-                <!-- Bachelor's Degree - Slideshow -->
                 <div class="edu-row">
                     <div class="slideshow-container glass-panel" id="slideshow1">
-                       <img src="photo_6199429845037551252_y.jpg" class="slide" alt="Bachelor's graduation photo 3">
+                        <img src="photo_6199429845037551252_y.jpg" class="slide" alt="Bachelor's graduation photo 3">
                         <img src="IMG_8840.JPG" class="slide active" alt="Bachelor's graduation photo 1">
                         <img src="IMG_9113.JPG" class="slide" alt="Bachelor's graduation photo 2">
                         
@@ -1589,12 +1938,10 @@ Facebook, and YouTube.</span></li>
                     </div>
                 </div>
 
-                <!-- Foundation Studies - Slideshow -->
                 <div class="edu-row reverse">
                     <div class="slideshow-container glass-panel" id="slideshow2">
                         <img src="photo_6161198919501681126_y.jpg" class="slide active" alt="Foundation studies photo 1">
                         <img src="Foundation Grad.jpg" class="slide" alt="Foundation studies photo 2">
-                        
                         
                         <div class="dot-container" id="dots2">
                             <span class="dot active" data-index="0"></span>
@@ -1670,9 +2017,7 @@ Facebook, and YouTube.</span></li>
         </div>
     </section>
 
-    <!-- ============================================================
-    PHOTOGRAPHY MODAL
-    ============================================================ -->
+    <!-- PHOTOGRAPHY MODAL -->
     <div id="photoModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'photoModal')">
         <div class="modal-window">
             <button class="close-modal-btn" onclick="closeModal('photoModal')"><i class="fas fa-times"></i></button>
@@ -1680,142 +2025,48 @@ Facebook, and YouTube.</span></li>
             <p class="modal-desc">A curated archive of lifestyle, corporate event tracking, and content creation layout captures.</p>
             
             <div class="media-showcase-grid">
-                <div class="showcase-item">
-                    <img src="IMG_7690.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_0638.JPG" alt="Photography Work"> 
-                </div>
-                 <div class="showcase-item">
-                    <img src="Wendy.jpg" alt="Photography Work"> 
-                </div>
-                <div class="showcase-item">
-                    <img src="Wendy 1.jpg" alt="Photography Work"> 
-                </div>
-                 <div class="showcase-item">
-                    <img src="Wendy 3.jpg" alt="Photography Work"> 
-                </div>
-                 <div class="showcase-item">
-                    <img src="Wendy 4 .jpg" alt="Photography Work"> 
-                </div>
-                <div class="showcase-item">
-                    <img src="gt 1 .JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="gt 2.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="gt 3.JPG" alt="Photography Work">
-                </div>
-                 <div class="showcase-item">
-                    <img src="gt 4.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_1011.JPG" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_7589.JPG" alt="Photography Work">
-                
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_0953.JPG" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_7409.JPG" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_7460.JPG" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_7558.JPG" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_3756 (1).JPG" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_3754.JPG" alt="Photography Work">
-                   
-                </div>
-                <div class="showcase-item">
-                    <img src="photo_6086786072769050880_y.jpg" alt="Photography Work">
-                 
-                </div>
-                 <div class="showcase-item">
-                    <img src="photo_6086786072769050882_y.jpg" alt="Photography Work">
-                  
-                </div>
-                 <div class="showcase-item">
-                    <img src="photo_6086786072769050874_y.jpg" alt="Photography Work">
-                    
-                </div>
-                 <div class="showcase-item">
-                    <img src="photo_6086786072769050858_y.jpg" alt="Photography Work">
-                   
-                </div>
-                <div class="showcase-item">
-                    <img src="photo_6086786072769050857_y.jpg" alt="Photography Work">
-                    
-                </div>
-                 <div class="showcase-item">
-                    <img src="photo_6086786072769050862_y.jpg" alt="Photography Work">
-                    
-                </div>
-              <div class="showcase-item">
-                    <img src="photo_6086786072769050863_y.jpg" alt="Photography Work">
-                    
-                </div>
-                <div class="showcase-item">
-                    <img src="photo_6086786072769050862_y.jpg" alt="Photography Work">
-                
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_20230528_190059_388.jpg" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="IMG_20230708_000641_087.jpg" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 1 .JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 1.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 3.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 4.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 5.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 6.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 7.JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 8 .JPG" alt="Photography Work">
-                </div>
-                <div class="showcase-item">
-                    <img src="PE 9 .JPG" alt="Photography Work">
-                </div>
-                 
-            </div>
+                <div class="showcase-item"><img src="IMG_7690.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_0638.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="Wendy.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="Wendy 1.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="Wendy 3.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="Wendy 4 .jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="gt 1 .JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="gt 2.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="gt 3.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="gt 4.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_1011.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_7589.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_0953.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_7409.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_7460.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_7558.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_3756 (1).JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_3754.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050880_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050882_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050874_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050858_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050857_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050862_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050863_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="photo_6086786072769050862_y.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_20230528_190059_388.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="IMG_20230708_000641_087.jpg" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 1 .JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 1.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 3.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 4.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 5.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 6.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 7.JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 8 .JPG" alt="Photography Work"></div>
+                <div class="showcase-item"><img src="PE 9 .JPG" alt="Photography Work"></div>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    VIDEOGRAPHY MODAL
-    ============================================================ -->
+    <!-- VIDEOGRAPHY MODAL -->
     <div id="videoModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'videoModal')">
         <div class="modal-window">
             <button class="close-modal-btn" onclick="closeModal('videoModal')"><i class="fas fa-times"></i></button>
@@ -1823,126 +2074,56 @@ Facebook, and YouTube.</span></li>
             <p class="modal-desc">Short-form editing metrics and social campaign dynamic video highlights.</p>
             
             <div class="video-grid">
-                <div>
-                <span> <a href="https://drive.google.com/file/d/1AQvZUve4_ey3YfAfDRph6Qi88jFQWZaW/view?usp=sharing">Click this link to get to video</a></span>
-                     <img src="13.png" alt="Marketing poster design"> 
-                </div>
-                   <div>
-                     <span> <a href="https://drive.google.com/file/d/1AQvZUve4_ey3YfAfDRph6Qi88jFQWZaW/view?usp=sharing">Click this link to get to video</a></span>
-                     <img src="11.png" alt="Marketing poster design"> 
-                </div>
-                <div>
-                     <span> <a href="https://drive.google.com/file/d/1mR78RJXPmyHomv4M4mh6iRWGChixg2nS/view?usp=sharing">Click this link to get to video</a></span>
-                     <img src="12.png" alt="Marketing poster design"> 
-                </div>
-             <div>
-                     <span> <a href="https://drive.google.com/file/d/1XfUQCAE5BizcdqbLQ518ukSNTeeeDnkd/view?usp=sharing">Click this link to get to video</a></span>
-                     <img src="14.png" alt="Marketing poster design"> 
-                </div>
-                <div>
-                     <span> <a href="https://drive.google.com/file/d/1V3LKwZRxsbfIqpl3ZzP174EI5IL_UzoZ/view?usp=sharing">Click this link to get to video</a></span>
-                     <img src="Untitled design (4).png" alt="Marketing poster design"> 
-                </div>
-                <div class="video-item full-width">
-                    <video controls>
-                        <source src="Burmese language reel.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div>
-                    <img src="Global Gateway reel 1 .png" alt="Marketing poster design"> 
-                    <span> <a href="https://www.instagram.com/reel/DLO__8zJD9u/?igsh=Nm1jN2xpcDd3MGwz">Click this link to get to video</a></span>
-                </div>
-                  <div>
-                    <img src="Global Gateway reel 2.png" alt="Marketing poster design"> 
-                    <span> <a href="https://www.instagram.com/reel/DR7CvdJD-P9/?igsh=MXNlcHFxdGxjdzhucw==">Click this link to get to video</a></span>
-                </div>
-                 <div>
-                    <img src="Global Gateway reel 3.png" alt="Marketing poster design"> 
-                    <span> <a href="https://www.instagram.com/reel/DSAU_JSDziC/?igsh=MnE0aWYyYnN3bzV4">Click this link to get to video</a></span>
-                </div>
-                <div>
-                    <img src="Global Gateway reel 4.png" alt="Marketing poster design"> 
-                    <span> <a href=https://www.instagram.com/reel/DSM1_6TkaDn/?utm_source=ig_web_button_share_sheet">Click this link to get to video</a></span>
-                </div>
-                <div>
-                    <img src="Global Gateway reel 5.png" alt="Marketing poster design"> 
-                    <span> <a href="https://www.instagram.com/reel/DR7CvdJD-P9/?igsh=MXNlcHFxdGxjdzhucw==">Click this link to get to video</a></span>
-                </div>
-                <div>
-                    <img src="Global Gateway reel 6.png" alt="Marketing poster design"> 
-                    <span> <a href="https://www.instagram.com/reel/DSucsNUkbPH/?igsh=OHdydGhrdnR3cXBo">Click this link to get to video</a></span>
-                </div> 
-               <div>
-                    <img src="Global Gateway reel 7.png" alt="Marketing poster design"> 
-                    <span> <a href="https://www.instagram.com/reel/DX9mbS4ikX0/?igsh=MTNnZDdha3NtNWNzbg==">Click this link to get to video</a></span>
-                </div>  
-                  <div class="video-item full-width">
-                    <video controls>
-                        <source src="Red, White and Black Modern Clean Animated Business advertising Mobile Video.mp4" type="video/mp4">
-                    </video>
-                </div>
-                </div>
+                <div><span><a href="https://drive.google.com/file/d/1AQvZUve4_ey3YfAfDRph6Qi88jFQWZaW/view?usp=sharing">Click this link to get to video</a></span><img src="13.png" alt="Marketing poster design"></div>
+                <div><span><a href="https://drive.google.com/file/d/1AQvZUve4_ey3YfAfDRph6Qi88jFQWZaW/view?usp=sharing">Click this link to get to video</a></span><img src="11.png" alt="Marketing poster design"></div>
+                <div><span><a href="https://drive.google.com/file/d/1mR78RJXPmyHomv4M4mh6iRWGChixg2nS/view?usp=sharing">Click this link to get to video</a></span><img src="12.png" alt="Marketing poster design"></div>
+                <div><span><a href="https://drive.google.com/file/d/1XfUQCAE5BizcdqbLQ518ukSNTeeeDnkd/view?usp=sharing">Click this link to get to video</a></span><img src="14.png" alt="Marketing poster design"></div>
+                <div><span><a href="https://drive.google.com/file/d/1V3LKwZRxsbfIqpl3ZzP174EI5IL_UzoZ/view?usp=sharing">Click this link to get to video</a></span><img src="Untitled design (4).png" alt="Marketing poster design"></div>
+                <div class="video-item full-width"><video controls><source src="Burmese language reel.mp4" type="video/mp4"></video></div>
+                <div><img src="Global Gateway reel 1 .png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DLO__8zJD9u/?igsh=Nm1jN2xpcDd3MGwz">Click this link to get to video</a></span></div>
+                <div><img src="Global Gateway reel 2.png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DR7CvdJD-P9/?igsh=MXNlcHFxdGxjdzhucw==">Click this link to get to video</a></span></div>
+                <div><img src="Global Gateway reel 3.png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DSAU_JSDziC/?igsh=MnE0aWYyYnN3bzV4">Click this link to get to video</a></span></div>
+                <div><img src="Global Gateway reel 4.png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DSM1_6TkaDn/?utm_source=ig_web_button_share_sheet">Click this link to get to video</a></span></div>
+                <div><img src="Global Gateway reel 5.png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DR7CvdJD-P9/?igsh=MXNlcHFxdGxjdzhucw==">Click this link to get to video</a></span></div>
+                <div><img src="Global Gateway reel 6.png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DSucsNUkbPH/?igsh=OHdydGhrdnR3cXBo">Click this link to get to video</a></span></div>
+                <div><img src="Global Gateway reel 7.png" alt="Marketing poster design"><span><a href="https://www.instagram.com/reel/DX9mbS4ikX0/?igsh=MTNnZDdha3NtNWNzbg==">Click this link to get to video</a></span></div>
+                <div class="video-item full-width"><video controls><source src="Red, White and Black Modern Clean Animated Business advertising Mobile Video.mp4" type="video/mp4"></video></div>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    GRAPHIC DESIGN MODAL
-    ============================================================ -->
+    <!-- GRAPHIC DESIGN MODAL -->
     <div id="designModal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'designModal')">
         <div class="modal-window">
             <button class="close-modal-btn" onclick="closeModal('designModal')"><i class="fas fa-times"></i></button>
-            
             <div class="design-grid">
-                <div class="design-item">
-                    <img src="သိန်း ၁၅၀ နဲ့ 1.png" alt="Marketing poster design">    
-                </div>
-                <div class="design-item">
-                    <img src="Add a heading.png" alt="Brand strategy design">
-                </div>
-                <div class="design-item">
-                    <img src="Add a heading (1).png" alt="Communication layout">
-                    
-                </div>
-                <div class="design-item">
-                    <img src="empower hub 1 .png" alt="Communication layout">
-                </div>
-                <div class="design-item">
-                    <img src="empower hub 2 .png" alt="Communication layout">
-                </div>
-                <div class="design-item">
-                    <img src="Purple Modern Printing Services Instagram Post (1).png" alt="Communication layout">
-                </div>
-                 <div class="design-item">
-                    <img src="Design 2 .png" alt="Communication layout">
-                </div>
-                    <div class="design-item">
-                    <img src="Study Abroad 1.png" alt="Communication layout">
-                </div>
+                <div class="design-item"><img src="သိန်း ၁၅၀ နဲ့ 1.png" alt="Marketing poster design"></div>
+                <div class="design-item"><img src="Add a heading.png" alt="Brand strategy design"></div>
+                <div class="design-item"><img src="Add a heading (1).png" alt="Communication layout"></div>
+                <div class="design-item"><img src="empower hub 1 .png" alt="Communication layout"></div>
+                <div class="design-item"><img src="empower hub 2 .png" alt="Communication layout"></div>
+                <div class="design-item"><img src="Purple Modern Printing Services Instagram Post (1).png" alt="Communication layout"></div>
+                <div class="design-item"><img src="Design 2 .png" alt="Communication layout"></div>
+                <div class="design-item"><img src="Study Abroad 1.png" alt="Communication layout"></div>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    VOLUNTEER SECTION WITH SLIDESHOWS
-    ============================================================ -->
+    <!-- VOLUNTEER SECTION -->
     <section id="volunteer" class="section">
         <div class="container">
             <h2 class="section-title">Volunteer Experience</h2>
 
             <div class="volunteer-container">
-                <!-- Volunteer 1 - Vice President -->
                 <div class="volunteer-box glass-panel">
                     <div class="volunteer-slideshow" id="volunteerSlideshow1">
                         <img src="amsa vice president.jpg" class="slide active" alt="Vice President photo 1">
                         <img src="Screenshot (73).png" class="slide" alt="Vice President photo 2">
-                        
                         <div class="dot-container">
                             <span class="dot active" data-index="0"></span>
                             <span class="dot" data-index="1"></span>
                             <span class="dot" data-index="2"></span>
                         </div>
-                        
                         <button class="slide-btn prev" onclick="changeVolunteerSlide('volunteerSlideshow1', -1)">‹</button>
                         <button class="slide-btn next" onclick="changeVolunteerSlide('volunteerSlideshow1', 1)">›</button>
                     </div>
@@ -1950,29 +2131,23 @@ Facebook, and YouTube.</span></li>
                         <h3>Vice President</h3>
                         <p class="vol-meta">AIU Myanmar Student Association | Oct 2021 - Oct 2022</p>
                         <ul>
-                            <li>Assisted the President in overseeing organizational operations, strategic
-planning, and execution of student-focused initiatives.</li>
-                            <li>Coordinated with executive committee members to ensure effective
-communication, teamwork, and successful project delivery.</li>
-                            <li>Interviewing and assigning member of association to specific unit of the
-assoication based on their merit</li>
+                            <li>Assisted the President in overseeing organizational operations, strategic planning, and execution of student-focused initiatives.</li>
+                            <li>Coordinated with executive committee members to ensure effective communication, teamwork, and successful project delivery.</li>
+                            <li>Interviewing and assigning member of association to specific unit of the association based on their merit</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Volunteer 2 - Media Unit Representative -->
                 <div class="volunteer-box glass-panel">
                     <div class="volunteer-slideshow" id="volunteerSlideshow2">
                         <img src="photo shooting.jpg" class="slide active" alt="Media Unit photo 1">
                         <img src="IMG_7931.JPG" class="slide" alt="Media Unit photo 2">
                         <img src="photo_6201728292491038919_x.jpg" class="slide" alt="Media Unit photo 3">
-                        
                         <div class="dot-container">
                             <span class="dot active" data-index="0"></span>
                             <span class="dot" data-index="1"></span>
                             <span class="dot" data-index="2"></span>
                         </div>
-                        
                         <button class="slide-btn prev" onclick="changeVolunteerSlide('volunteerSlideshow2', -1)">‹</button>
                         <button class="slide-btn next" onclick="changeVolunteerSlide('volunteerSlideshow2', 1)">›</button>
                     </div>
@@ -1980,26 +2155,23 @@ assoication based on their merit</li>
                         <h3>Media Unit Representative</h3>
                         <p class="vol-meta">AIU Myanmar Student Association | Oct 2022 - Oct 2023</p>
                         <ul>
-                            <li>Documented  events , creating interactive Reels and visual assets that led to a <span class="achievement-highlight">20% increase in online engagement</span></li>
+                            <li>Documented events, creating interactive Reels and visual assets that led to a <span class="achievement-highlight">20% increase in online engagement</span></li>
                             <li>Assign role within the unit and supervise the assigned tasks of the unit members.</li>
                             <li>Managed social media presence and handle general enquires from outside through social medias of the association</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Volunteer 3 - Project Hope Representative -->
                 <div class="volunteer-box glass-panel">
                     <div class="volunteer-slideshow" id="volunteerSlideshow3">
                         <img src="19800101000340_IMG_4070.jpg" class="slide active" alt="Project Hope photo 1">
                         <img src="IMG_0493.JPG" class="slide" alt="Project Hope photo 2">
                         <img src="IMG_8312.JPG" class="slide" alt="Project Hope photo 3">
-                        
                         <div class="dot-container">
                             <span class="dot active" data-index="0"></span>
                             <span class="dot" data-index="1"></span>
                             <span class="dot" data-index="2"></span>
                         </div>
-                        
                         <button class="slide-btn prev" onclick="changeVolunteerSlide('volunteerSlideshow3', -1)">‹</button>
                         <button class="slide-btn next" onclick="changeVolunteerSlide('volunteerSlideshow3', 1)">›</button>
                     </div>
@@ -2013,29 +2185,24 @@ assoication based on their merit</li>
                     </div>
                 </div>
 
-                <!-- Volunteer 4 - Project Hope Representative (Duplicate with different content) -->
                 <div class="volunteer-box glass-panel">
                     <div class="volunteer-slideshow" id="volunteerSlideshow4">
                         <img src="IMG_1731.JPG" class="slide active" alt="Project Hope photo 1">
                         <img src="IMG_1718.JPG" class="slide" alt="Project Hope photo 2">
-                        
-                        
                         <div class="dot-container">
                             <span class="dot active" data-index="0"></span>
                             <span class="dot" data-index="1"></span>
-                            
                         </div>
-                        
                         <button class="slide-btn prev" onclick="changeVolunteerSlide('volunteerSlideshow4', -1)">‹</button>
                         <button class="slide-btn next" onclick="changeVolunteerSlide('volunteerSlideshow4', 1)">›</button>
                     </div>
                     <div class="vol-item">
                         <h3>Project volunteer</h3>
-                        <p class="vol-meta">Social Harmony between Refugee Community and Local Malaysian Community in Sungai Patani | Oct  2025 - Present </p>
+                        <p class="vol-meta">Social Harmony between Refugee Community and Local Malaysian Community in Sungai Patani | Oct 2025 - Present</p>
                         <ul>
                             <li>Conduct <span class="achievement-highlight">focus group discussion</span> involving <span class="achievement-highlight">with refugee and locals in sungai petani</span> in local villages, mosques and refugee residents.</li>
                             <li>Analyze findings and conduct <span class="achievement-highlight">workshop</span> between refugees and Malay community based on findings.</li>
-                            <li>Contributed in Translation, ducumentation and analysis of the findings.</li>
+                            <li>Contributed in Translation, documentation and analysis of the findings.</li>
                         </ul>
                     </div>
                 </div>
@@ -2043,9 +2210,7 @@ assoication based on their merit</li>
         </div>
     </section>
 
-    <!-- ============================================================
-    SKILLS SECTION WITH SKILL BARS
-    ============================================================ -->
+    <!-- SKILLS SECTION -->
     <section id="skills" class="section">
         <div class="container">
             <h2 class="section-title">Skills & Toolkit</h2>
@@ -2069,54 +2234,111 @@ assoication based on their merit</li>
                 <span class="skill-tag glass-panel">Myanmar - English Translation</span>
             </div>
 
-           
+            <div class="skill-bars-container">
+                <div class="skill-bar-group">
+                    <div class="skill-category">📊 Marketing & Communication</div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Social Media Strategy <span>90%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:90%;"></div></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Content Creation <span>95%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:95%;"></div></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Public Relations <span>85%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:85%;"></div></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Corporate Communication <span>88%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:88%;"></div></div>
+                    </div>
+                </div>
 
-    
+                <div class="skill-bar-group">
+                    <div class="skill-category">🎨 Creative & Technical</div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Video Editing (Capcut/Premiere) <span>85%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:85%;"></div></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Photography <span>90%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:90%;"></div></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">Graphic Design (Canva/Adobe) <span>82%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:82%;"></div></div>
+                    </div>
+                    <div class="skill-bar-item">
+                        <div class="skill-name">News & Feature Writing <span>88%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" style="--fill:88%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- ============================================================
-    CONTACT SECTION - REDESIGNED
-    ============================================================ -->
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <h2 class="section-title">Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass-panel">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Soe Min's attention to detail and creative vision made our campaign stand out. His ability to translate complex ideas into compelling visuals is exceptional."</p>
+                    <div class="testimonial-author">— John Doe</div>
+                    <div class="testimonial-role">Marketing Director, Global Gateway Fz LLC</div>
+                </div>
+
+                <div class="testimonial-card glass-panel">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Working with Soe Min was a game-changer for our social media presence. His content strategy increased our engagement by over 40% in just three months."</p>
+                    <div class="testimonial-author">— Jane Smith</div>
+                    <div class="testimonial-role">Communications Manager, Universiti Utara Malaysia</div>
+                </div>
+
+                <div class="testimonial-card glass-panel">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"Soe Min's photography and videography work captured the essence of our events perfectly. His professional approach and creative eye are unmatched."</p>
+                    <div class="testimonial-author">— Ahmad Ridzuan</div>
+                    <div class="testimonial-role">Event Coordinator, AIU Myanmar Student Association</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
             <p class="contact-subtitle">Let's connect! Reach out through any of the channels below.</p>
             
             <div class="contact-grid">
-                <!-- Email -->
                 <a href="mailto:minsithusoe456.business@gmail.com" class="contact-card glass-panel email">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                     <div class="contact-label">Email</div>
                     <div class="contact-value">minsithusoe456@gmail.com</div>
                     <div class="contact-arrow"><i class="fas fa-arrow-right"></i> Send Message</div>
                 </a>
 
-                <!-- WhatsApp -->
                 <a href="https://wa.me/60147256574" target="_blank" class="contact-card glass-panel whatsapp">
-                    <div class="contact-icon">
-                        <i class="fab fa-whatsapp"></i>
-                    </div>
+                    <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
                     <div class="contact-label">WhatsApp</div>
                     <div class="contact-value">+60 14-725-6574</div>
                     <div class="contact-arrow"><i class="fas fa-arrow-right"></i> Chat Now</div>
                 </a>
 
-                <!-- LinkedIn -->
                 <a href="https://www.linkedin.com/in/soe-min-si-thu-266360344?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" class="contact-card glass-panel linkedin">
-                    <div class="contact-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </div>
+                    <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
                     <div class="contact-label">LinkedIn</div>
                     <div class="contact-value">linkedin.com/in/soeminsithu</div>
                     <div class="contact-arrow"><i class="fas fa-arrow-right"></i> Connect</div>
                 </a>
             </div>
 
-            <!-- CV Download Section -->
             <div id="cv-download" class="cv-download-section">
-                <p><i class="Soe Min Si Thu - CV (1).pdf" style="color: var(--accent); margin-right: 10px;"></i>Ready to see my full professional profile?</p>
-                <a href="https://drive.google.com/file/d/1FEPg3u_HhCxeYShRQbKgKF3iQUlPLoFD/view?usp=sharing" class="btn-primary" onclick="alert('Soe Min Si Thu - CV (1).pdf'); return false;">
+                <p><i class="fas fa-file-pdf" style="color: var(--accent); margin-right: 10px;"></i>Ready to see my full professional profile?</p>
+                <a href="https://drive.google.com/file/d/1FEPg3u_HhCxeYShRQbKgKF3iQUlPLoFD/view?usp=sharing" class="btn-primary">
                     <i class="fas fa-download"></i> Download My CV
                 </a>
             </div>
@@ -2125,15 +2347,19 @@ assoication based on their merit</li>
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; @SoeMinSithu2026 </p>
+            <p>&copy; @SoeMinSithu2026</p>
         </div>
     </footer>
 
     <script>
         // ==========================================================================
-        // 0. TYPING EFFECT FOR HEADLINE
+        // FULL ANIMATION SYSTEM
         // ==========================================================================
         document.addEventListener('DOMContentLoaded', function() {
+
+            // ================================================================
+            // 0. TYPING EFFECT
+            // ================================================================
             const phrases = [
                 'A Digital Storyteller 📱',
                 'A Strategic Communicator 📊',
@@ -2170,16 +2396,16 @@ assoication based on their merit</li>
                 
                 setTimeout(typeEffect, typingSpeed);
             }
-            
             typeEffect();
 
-            // ==========================================================================
-            // 1. EDUCATION SLIDESHOW FUNCTIONALITY
-            // ==========================================================================
+            // ================================================================
+            // 1. SLIDESHOWS
+            // ================================================================
             let slideIntervals = {};
 
-            function changeSlide(containerId, direction) {
+            window.changeSlide = function(containerId, direction) {
                 const container = document.getElementById(containerId);
+                if (!container) return;
                 const slides = container.querySelectorAll('.slide');
                 const dots = container.querySelectorAll('.dot');
                 
@@ -2205,6 +2431,7 @@ assoication based on their merit</li>
 
             function goToSlide(containerId, index) {
                 const container = document.getElementById(containerId);
+                if (!container) return;
                 const slides = container.querySelectorAll('.slide');
                 const dots = container.querySelectorAll('.dot');
                 
@@ -2226,7 +2453,7 @@ assoication based on their merit</li>
 
             function startAutoSlide(containerId) {
                 slideIntervals[containerId] = setInterval(() => {
-                    changeSlide(containerId, 1);
+                    window.changeSlide(containerId, 1);
                 }, 4000);
             }
 
@@ -2235,23 +2462,20 @@ assoication based on their merit</li>
                 if (!container) return;
                 
                 const dots = container.querySelectorAll('.dot');
-                
                 dots.forEach((dot, index) => {
                     dot.addEventListener('click', function() {
                         goToSlide(containerId, index);
                     });
                 });
-
                 startAutoSlide(containerId);
             }
 
-            // ==========================================================================
-            // 2. VOLUNTEER SLIDESHOW FUNCTIONALITY
-            // ==========================================================================
+            // Volunteer slideshows
             let volunteerSlideIntervals = {};
 
-            function changeVolunteerSlide(containerId, direction) {
+            window.changeVolunteerSlide = function(containerId, direction) {
                 const container = document.getElementById(containerId);
+                if (!container) return;
                 const slides = container.querySelectorAll('.slide');
                 const dots = container.querySelectorAll('.dot');
                 
@@ -2277,6 +2501,7 @@ assoication based on their merit</li>
 
             function goToVolunteerSlide(containerId, index) {
                 const container = document.getElementById(containerId);
+                if (!container) return;
                 const slides = container.querySelectorAll('.slide');
                 const dots = container.querySelectorAll('.dot');
                 
@@ -2298,7 +2523,7 @@ assoication based on their merit</li>
 
             function startVolunteerAutoSlide(containerId) {
                 volunteerSlideIntervals[containerId] = setInterval(() => {
-                    changeVolunteerSlide(containerId, 1);
+                    window.changeVolunteerSlide(containerId, 1);
                 }, 4000);
             }
 
@@ -2307,19 +2532,15 @@ assoication based on their merit</li>
                 if (!container) return;
                 
                 const dots = container.querySelectorAll('.dot');
-                
                 dots.forEach((dot, index) => {
                     dot.addEventListener('click', function() {
                         goToVolunteerSlide(containerId, index);
                     });
                 });
-
                 startVolunteerAutoSlide(containerId);
             }
 
-            // ==========================================================================
-            // 3. INITIALIZE ALL SLIDESHOWS
-            // ==========================================================================
+            // Initialize all slideshows
             initSlideshow('slideshow1');
             initSlideshow('slideshow2');
             initVolunteerSlideshow('volunteerSlideshow1');
@@ -2327,56 +2548,163 @@ assoication based on their merit</li>
             initVolunteerSlideshow('volunteerSlideshow3');
             initVolunteerSlideshow('volunteerSlideshow4');
 
+            // Pause on hover
             document.querySelectorAll('.slideshow-container, .volunteer-slideshow').forEach(container => {
                 container.addEventListener('mouseenter', function() {
                     const id = this.id;
-                    if (slideIntervals[id]) {
-                        clearInterval(slideIntervals[id]);
-                    }
-                    if (volunteerSlideIntervals[id]) {
-                        clearInterval(volunteerSlideIntervals[id]);
-                    }
+                    if (slideIntervals[id]) clearInterval(slideIntervals[id]);
+                    if (volunteerSlideIntervals[id]) clearInterval(volunteerSlideIntervals[id]);
                 });
-                
                 container.addEventListener('mouseleave', function() {
                     const id = this.id;
-                    if (this.classList.contains('slideshow-container')) {
-                        startAutoSlide(id);
-                    } else if (this.classList.contains('volunteer-slideshow')) {
-                        startVolunteerAutoSlide(id);
-                    }
+                    if (this.classList.contains('slideshow-container')) startAutoSlide(id);
+                    else if (this.classList.contains('volunteer-slideshow')) startVolunteerAutoSlide(id);
                 });
             });
 
-            // ==========================================================================
-            // 4. MODAL CONTROL FUNCTIONS
-            // ==========================================================================
-            function openModal(modalId) {
-                document.getElementById(modalId).classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+            // ================================================================
+            // 2. SCROLL ANIMATIONS WITH INTERSECTION OBSERVER
+            // ================================================================
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-            function closeModal(modalId) {
-                document.getElementById(modalId).classList.remove('active');
-                document.body.style.overflow = 'auto';
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+            document.querySelectorAll('.edu-row').forEach(el => observer.observe(el));
+            document.querySelectorAll('.portfolio-card').forEach(el => observer.observe(el));
+            document.querySelectorAll('.volunteer-box').forEach(el => observer.observe(el));
+            document.querySelectorAll('.skill-tag').forEach(el => observer.observe(el));
+            document.querySelectorAll('.skill-bar-group').forEach(el => observer.observe(el));
+            document.querySelectorAll('.testimonial-card').forEach(el => observer.observe(el));
+            document.querySelectorAll('.contact-card').forEach(el => observer.observe(el));
+
+            // ================================================================
+            // 3. COUNT-UP ANIMATION FOR STATS
+            // ================================================================
+            let statsAnimated = false;
+
+            function animateStats() {
+                if (statsAnimated) return;
                 
-                if(modalId === 'videoModal') {
-                    document.querySelectorAll('#videoModal video').forEach(video => {
-                        video.pause();
-                        video.currentTime = 0;
-                    });
+                const statNumbers = document.querySelectorAll('.stat-number');
+                const statsSection = document.querySelector('.stats-bar');
+                if (!statsSection) return;
+
+                const rect = statsSection.getBoundingClientRect();
+                if (rect.top > window.innerHeight) return;
+
+                statsAnimated = true;
+                
+                statNumbers.forEach(stat => {
+                    const target = parseInt(stat.getAttribute('data-count'));
+                    let current = 0;
+                    const increment = Math.ceil(target / 50);
+                    const duration = 1500;
+                    const stepTime = Math.floor(duration / (target / increment));
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            stat.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = current;
+                        }
+                    }, stepTime);
+                });
+            }
+
+            // ================================================================
+            // 4. SKILL BARS ANIMATION
+            // ================================================================
+            let skillBarsAnimated = false;
+
+            function animateSkillBars() {
+                if (skillBarsAnimated) return;
+                
+                const fills = document.querySelectorAll('.skill-bar-fill');
+                if (!fills.length) return;
+
+                const container = fills[0].closest('.skill-bars-container');
+                if (!container) return;
+
+                const rect = container.getBoundingClientRect();
+                if (rect.top > window.innerHeight) return;
+
+                skillBarsAnimated = true;
+                
+                fills.forEach((fill, index) => {
+                    setTimeout(() => {
+                        fill.classList.add('animated');
+                    }, index * 150);
+                });
+            }
+
+            // ================================================================
+            // 5. NAVBAR SCROLL EFFECT
+            // ================================================================
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                animateStats();
+                animateSkillBars();
+            });
+
+            setTimeout(() => {
+                animateStats();
+                animateSkillBars();
+            }, 500);
+
+            // ================================================================
+            // 6. MODALS
+            // ================================================================
+            window.openModal = function(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
                 }
             }
 
-            function closeModalOnOverlay(event, modalId) {
+            window.closeModal = function(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    if (modalId === 'videoModal') {
+                        modal.querySelectorAll('video').forEach(video => {
+                            video.pause();
+                            video.currentTime = 0;
+                        });
+                    }
+                }
+            }
+
+            window.closeModalOnOverlay = function(event, modalId) {
                 if (event.target.id === modalId) {
-                    closeModal(modalId);
+                    window.closeModal(modalId);
                 }
             }
 
-            // ==========================================================================
-            // 5. ACTIVE NAVIGATION HIGHLIGHTER
-            // ==========================================================================
+            // ================================================================
+            // 7. ACTIVE NAVIGATION
+            // ================================================================
             const sections = document.querySelectorAll("section");
             const navLi = document.querySelectorAll(".nav-links li a");
 
@@ -2398,44 +2726,17 @@ assoication based on their merit</li>
                 });
             });
 
-            // ==========================================================================
-            // 6. MOBILE NAVIGATION AUTO-COLLAPSE
-            // ==========================================================================
+            // ================================================================
+            // 8. MOBILE NAV TOGGLE
+            // ================================================================
             const navLinksList = document.querySelectorAll('.nav-links a');
             const toggleCheckbox = document.getElementById('menu-toggle');
             navLinksList.forEach(link => {
                 link.addEventListener('click', () => {
-                    toggleCheckbox.checked = false;
+                    if (toggleCheckbox) toggleCheckbox.checked = false;
                 });
             });
 
-            // ==========================================================================
-            // 7. SKILL BARS ANIMATION ON SCROLL
-            // ==========================================================================
-            function animateSkillBars() {
-                const skillFills = document.querySelectorAll('.skill-bar-fill');
-                
-                skillFills.forEach(fill => {
-                    const rect = fill.getBoundingClientRect();
-                    const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
-                    
-                    if (isVisible && !fill.classList.contains('animated')) {
-                        fill.classList.add('animated');
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', animateSkillBars);
-            window.addEventListener('load', function() {
-                setTimeout(animateSkillBars, 500);
-            });
-
-            // Expose functions to global scope for inline onclick handlers
-            window.changeSlide = changeSlide;
-            window.changeVolunteerSlide = changeVolunteerSlide;
-            window.openModal = openModal;
-            window.closeModal = closeModal;
-            window.closeModalOnOverlay = closeModalOnOverlay;
         });
     </script>
 </body>
